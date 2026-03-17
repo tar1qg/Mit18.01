@@ -6,29 +6,29 @@ class Dual:
         self.der = der  # 导数值 f'(x)
 
     def __add__(self, other):
-        # 法则：(u + v)' = u' + v'
+        # (u + v)' = u' + v'
         other = other if isinstance(other, Dual) else Dual(other)
         return Dual(self.val + other.val, self.der + other.der)
 
     def __sub__(self, other):
-        # 法则：(u - v)' = u' - v'
+        # (u - v)' = u' - v'
         other = other if isinstance(other, Dual) else Dual(other)
         return Dual(self.val - other.val, self.der - other.der)
 
     def __mul__(self, other):
-        # 18.01 核心：乘积法则 (uv)' = u'v + uv'
+        # (uv)' = u'v + uv'
         other = other if isinstance(other, Dual) else Dual(other)
         return Dual(self.val * other.val,
                     self.der * other.val + self.val * other.der)
 
     def __truediv__(self, other):
-        # 18.01 核心：商法则 (u/v)' = (u'v - uv') / v^2
+        # (u/v)' = (u'v - uv') / v^2
         other = other if isinstance(other, Dual) else Dual(other)
         return Dual(self.val / other.val,
                     (self.der * other.val - self.val * other.der) / (other.val**2))
 
     def __pow__(self, n):
-        # 18.01 核心：幂法则 [u(x)^n]' = n * u(x)^(n-1) * u'(x) (结合了链式法则)
+        # [u(x)^n]' = n * u(x)^(n-1) * u'(x)
         return Dual(self.val**n, n * (self.val**(n-1)) * self.der)
 
     def __repr__(self):
