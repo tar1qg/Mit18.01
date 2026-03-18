@@ -44,7 +44,7 @@ class Dual:
         # [u(x)^n]' = n * u(x)^(n-1) * u'(x)
         n = n if isinstance(n, Dual) else Dual(n)
 
-        return Dual(self.val**n.der, self.val ** n.val *
+        return Dual(self.val**n.val, self.val ** n.val *
                     (n.der * math.log(self.val) + (n.val * self.der / self.val)))
 
     def __repr__(self):
