@@ -1,5 +1,5 @@
 import math
-from Dual import Dual
+from .Dual import Dual
 
 def sin(x):
     """ f(x) = sin(x), f'(x) = cos(x) * x' """
