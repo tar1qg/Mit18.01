@@ -42,7 +42,10 @@ class Dual:
     def __pow__(self, n):
 
         # [u(x)^n]' = n * u(x)^(n-1) * u'(x)
-        return Dual(self.val**n, n * (self.val**(n-1)) * self.der)
+        n = n if isinstance(n, Dual) else Dual(n)
+
+        return Dual(self.val**n.der, self.val ** n.val *
+                    (n.der * math.log(self.val) + (n.val * self.der / self.val)))
 
     def __repr__(self):
         return f"Dual(val={self.val:.4f}, der={self.der:.4f})"
