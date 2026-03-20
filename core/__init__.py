@@ -1,5 +1,5 @@
 from .Dual import Dual
-from .Functions import sin, cos, exp, log, sinh, cosh
+from .Functions import sin, cos, exp, log, sinh, cosh,ln
 
 __all__ = [
     'Dual',
@@ -9,4 +9,5 @@ __all__ = [
     'log',
     'sinh',
     'cosh',
+    'ln',
 ]
