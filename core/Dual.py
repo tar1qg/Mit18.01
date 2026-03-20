@@ -11,6 +11,9 @@ class Dual:
         other = other if isinstance(other, Dual) else Dual(other)
         return Dual(self.val+other.val,self.der+other.der)
 
+    def __radd__(self, other):
+        return self.__add__(other)
+
     def __sub__(self, other):
         # (u - v)' = u' - v'
 
@@ -27,6 +30,9 @@ class Dual:
         other = other if isinstance(other, Dual) else Dual(other)
         return Dual(self.val * other.val,
                     self.der * other.val + self.val * other.der)
+
+    def __rmul__(self, other):
+        return self.__mul__(other)
 
     def __truediv__(self, other):
         # (u/v)' = (u'v - uv') / v^2
