@@ -37,3 +37,9 @@ def cosh(x):
 
     x = x if isinstance(x, Dual) else Dual(x)
     return Dual(math.cosh(x.val), math.sinh(x.val) * x.der)
+
+def ln(x):
+    """ f(x) = ln x, f'(x) = (1/x) * x' """
+
+    x = x if isinstance(x, Dual) else Dual(x)
+    return  Dual(math.log(x.val),x.der/x.val)
