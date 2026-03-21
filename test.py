@@ -67,6 +67,34 @@ def test_sin():
     assert math.isclose(y.val, 0.5)
     assert math.isclose(y.der, 1.0)
 
+def test_double_prime():
+
+    x = Dual(Dual(1.0, 1.0),1.0)
+    y = x**3+2*(x**2)+x
+
+    # y = 1+2+1= 4
+    # y' = 3*(x**2)+4*x+1 = 3+4+1 = 8
+    # y'' = 6*x+4 = 6+4 = 10
+
+    assert math.isclose(y.val.val, 4.0)
+    assert math.isclose(y.val.der, 8.0)
+    assert math.isclose(y.der.der, 10.0)
+
+def final_test():
+
+    x = Dual(Dual(1.0, 1.0), Dual(1.0, 0.0))
+    y = x ** x
+
+    # f(x) = x^x
+    # f'(x) = x^x * (ln x + 1)
+    # f''(x) = x^x * (ln x + 1)^2 + x^x * (1/x)
+    # 当 x = 1 时：f(1)=1, f'(1)=1, f''(1)=2
+
+    assert math.isclose(y.val.val, 1.0)
+    assert math.isclose(y.val.der, 1.0)
+    assert math.isclose(y.der.der, 2.0)
+
+
 
 if __name__ == "__main__":
     test_add()
@@ -76,3 +104,5 @@ if __name__ == "__main__":
     test_chain_rule()
     test_exp()
     test_sin()
+    test_double_prime()
+    final_test()
