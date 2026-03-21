@@ -3,43 +3,50 @@ from .Dual import Dual
 
 def sin(x):
     """ f(x) = sin(x), f'(x) = cos(x) * x' """
+    if not isinstance(x, Dual):
+        return math.sin(x)
 
-    x = x if isinstance(x, Dual) else Dual(x)
-    return Dual(math.sin(x.val), math.cos(x.val) * x.der)
+    return Dual(sin(x.val), cos(x.val) * x.der)
 
 def cos(x):
     """ f(x) = cos(x), f'(x) = -sin(x) * x' """
+    if not isinstance(x, Dual):
+        return math.cos(x)
 
-    x = x if isinstance(x, Dual) else Dual(x)
-    return Dual(math.cos(x.val), -math.sin(x.val) * x.der)
+    return Dual(cos(x.val), -sin(x.val) * x.der)
 
 def exp(x):
     """ f(x) = e^x, f'(x) = e^x * x' """
+    if not isinstance(x, Dual):
+        return math.exp(x)
 
-    x = x if isinstance(x, Dual) else Dual(x)
-    val = math.exp(x.val)
+    val = exp(x.val)
     return Dual(val, val * x.der)
 
 def log(x):
     """ f(x) = ln(x), f'(x) = (1/x) * x' """
+    if not isinstance(x, Dual):
+        return math.log(x)
 
-    x = x if isinstance(x, Dual) else Dual(x)
-    return Dual(math.log(x.val), (1.0 / x.val) * x.der)
+    return Dual(log(x.val), (1.0 / x.val) * x.der)
 
 def sinh(x):
     """ f(x) = sinh(x), f'(x) = cosh(x) * x' """
+    if not isinstance(x, Dual):
+        return math.sinh(x)
 
-    x = x if isinstance(x, Dual) else Dual(x)
-    return Dual(math.sinh(x.val), math.cosh(x.val) * x.der)
+    return Dual(sinh(x.val), cosh(x.val) * x.der)
 
 def cosh(x):
     """ f(x) = cosh(x), f'(x) = sinh(x) * x' """
+    if not isinstance(x, Dual):
+        return math.cosh(x)
 
-    x = x if isinstance(x, Dual) else Dual(x)
-    return Dual(math.cosh(x.val), math.sinh(x.val) * x.der)
+    return Dual(cosh(x.val), sinh(x.val) * x.der)
 
 def ln(x):
     """ f(x) = ln x, f'(x) = (1/x) * x' """
+    if not isinstance(x, Dual):
+        return math.log(x)
 
-    x = x if isinstance(x, Dual) else Dual(x)
-    return  Dual(math.log(x.val),x.der/x.val)
+    return  Dual(log(x.val),x.der/x.val)
