@@ -21,7 +21,8 @@ class Dual:
         return Dual(self.val - other.val, self.der - other.der)
 
     def __rsub__(self, other):
-        return Dual(other - self.val, -self.der)
+        other = other if isinstance(other, Dual) else Dual(other)
+        return other - self
 
 
     def __mul__(self, other):
@@ -42,16 +43,21 @@ class Dual:
                     (self.der * other.val - self.val * other.der) / (other.val**2))
 
     def __rtruediv__(self, other):
-        return  Dual(other.val/self.val,
-                     - (other * self.der) / (self.val ** 2))
+        other = other if isinstance(other, Dual) else Dual(other)
+        return  other/self
+
 
     def __pow__(self, n):
+        from core.Functions import ln
 
         # [u(x)^n]' = n * u(x)^(n-1) * u'(x)
         n = n if isinstance(n, Dual) else Dual(n)
 
-        return Dual(self.val**n.val, self.val ** n.val *
-                    (n.der * math.log(self.val) + (n.val * self.der / self.val)))
+        res_val = self.val ** n.val
+        ln_self = ln(self.val)
+
+        res_der = res_val * (n.der * ln_self + (n.val * self.der / self.val))
+        return Dual(res_val, res_der)
 
     def __repr__(self):
         return f"Dual(val={self.val:.4f}, der={self.der:.4f})"

@@ -1,8 +1,8 @@
 import math
-from .Dual import Dual
 
 def sin(x):
     """ f(x) = sin(x), f'(x) = cos(x) * x' """
+    from .Dual import Dual
     if not isinstance(x, Dual):
         return math.sin(x)
 
@@ -10,6 +10,7 @@ def sin(x):
 
 def cos(x):
     """ f(x) = cos(x), f'(x) = -sin(x) * x' """
+    from .Dual import Dual
     if not isinstance(x, Dual):
         return math.cos(x)
 
@@ -17,6 +18,7 @@ def cos(x):
 
 def exp(x):
     """ f(x) = e^x, f'(x) = e^x * x' """
+    from .Dual import Dual
     if not isinstance(x, Dual):
         return math.exp(x)
 
@@ -25,6 +27,7 @@ def exp(x):
 
 def log(x):
     """ f(x) = ln(x), f'(x) = (1/x) * x' """
+    from .Dual import Dual
     if not isinstance(x, Dual):
         return math.log(x)
 
@@ -32,6 +35,7 @@ def log(x):
 
 def sinh(x):
     """ f(x) = sinh(x), f'(x) = cosh(x) * x' """
+    from .Dual import Dual
     if not isinstance(x, Dual):
         return math.sinh(x)
 
@@ -39,6 +43,7 @@ def sinh(x):
 
 def cosh(x):
     """ f(x) = cosh(x), f'(x) = sinh(x) * x' """
+    from .Dual import Dual
     if not isinstance(x, Dual):
         return math.cosh(x)
 
@@ -46,7 +51,8 @@ def cosh(x):
 
 def ln(x):
     """ f(x) = ln x, f'(x) = (1/x) * x' """
+    from .Dual import Dual
     if not isinstance(x, Dual):
         return math.log(x)
 
-    return  Dual(log(x.val),x.der/x.val)
+    return  Dual(ln(x.val),x.der/x.val)
