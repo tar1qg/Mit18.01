@@ -56,7 +56,7 @@ def test_far_guess():
     print(abs(math.sqrt(2) - res))
 
 def test_failures():
-    print(">>> Test 4: Failure Cases (Zero Derivative)")
+    print(">>> Test 3: Failure Cases (Zero Derivative)")
     # f(x) = x^2 + 1
     # guess =  0，f'(0) = 0
     f = lambda x: x**2 + 1
