@@ -20,16 +20,20 @@ def newton_method(function,guess,tolerance=1e-5,max_steps=50):
             return None
 
         # f''(x) can't be too big
-        if abs(f_double_prime_x) > 100:
-            print()
+        if abs(f_double_prime_x) > 1000.0:
+            learning_rate = 0.1
+        elif abs(f_double_prime_x)>100.0:
+            learning_rate = 0.5
+        else:
+            learning_rate = 1.0
 
         # check for convergence
         if abs(f_x)<tolerance:
             return x_val
 
 
-        # newton method x_next = x - f(x) / f'(x)
-        x_val = x_val-f_x/f_prime_x
+        # newton method x_next = x - lr*(f(x) / f'(x))
+        x_val = x_val-learning_rate*(f_x/f_prime_x)
 
 
     return x_val
