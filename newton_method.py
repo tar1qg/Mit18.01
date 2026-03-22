@@ -1,5 +1,5 @@
 import math
-from core import Dual,cos,sin
+from core import Dual,exp
 
 
 def newton_method(function,guess,tolerance=1e-5,max_steps=50):
@@ -20,16 +20,20 @@ def newton_method(function,guess,tolerance=1e-5,max_steps=50):
             return None
 
         # f''(x) can't be too big
-        if abs(f_double_prime_x) > 100:
-            print()
+        if abs(f_double_prime_x) > 1000.0:
+            learning_rate = 0.1
+        elif abs(f_double_prime_x)>100.0:
+            learning_rate = 0.5
+        else:
+            learning_rate = 1.0
 
         # check for convergence
         if abs(f_x)<tolerance:
             return x_val
 
 
-        # newton method x_next = x - f(x) / f'(x)
-        x_val = x_val-f_x/f_prime_x
+        # newton method x_next = x - lr*(f(x) / f'(x))
+        x_val = x_val-learning_rate*(f_x/f_prime_x)
 
 
     return x_val
@@ -55,6 +59,7 @@ def test_far_guess():
     res = newton_method(f, guess=1000000.0, max_steps=100)
     print(abs(math.sqrt(2) - res))
 
+# failure case
 def test_failures():
     print(">>> Test 3: Failure Cases (Zero Derivative)")
     # f(x) = x^2 + 1
@@ -64,7 +69,27 @@ def test_failures():
     # return None : error
     print(res)
 
+
+def final_boss_challenge():
+    print(">>> Final Boss: Solving e^x + x - 10 = 0")
+    f = lambda x: exp(x) + x - 10
+
+    # x ie approximately equal to 2, choose far away from 2
+    # test: f''(x) = e^10 is too big
+    res = newton_method(f, guess=10.0)
+
+    if res is not None:
+        # to verify if e^res + res = 10
+        verification = math.exp(res) + res
+        print(abs(10 - verification))
+
+    else:
+        print("Failed to find a root.")
+
+
+
 if __name__ == "__main__":
     test_basic_polynomials()
     test_far_guess()
     test_failures()
+    final_boss_challenge()
