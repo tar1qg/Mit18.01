@@ -46,17 +46,23 @@ class Dual:
         other = other if isinstance(other, Dual) else Dual(other)
         return  other/self
 
-
     def __pow__(self, n):
-        from core.Functions import ln
-
-        # [u(x)^n]' = n * u(x)^(n-1) * u'(x)
-        n = n if isinstance(n, Dual) else Dual(n)
+        n = n if isinstance(n, Dual) else Dual(n, 0.0)
 
         res_val = self.val ** n.val
-        ln_self = ln(self.val)
 
-        res_der = res_val * (n.der * ln_self + (n.val * self.der / self.val))
+        # case1 : f'(n) = 0 n is constant
+        if n.der == 0.0:
+            res_der = n.val * (self.val ** (n.val - 1)) * self.der
+
+        # case2 : n is not constant
+        else:
+            from core.Functions import ln
+
+            #  y' = u^v * (v' * ln(u) + (v * u') / u)
+            ln_self = ln(self.val)
+            res_der = res_val * (n.der * ln_self + n.val * self.der / self.val)
+
         return Dual(res_val, res_der)
 
     def __repr__(self):
